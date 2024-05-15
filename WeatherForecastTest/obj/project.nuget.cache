@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5ZwyzVtMjHjvoJ99bI5PCDlL1BiL8zTyKeTHdeOP8D6FplZJFem2uHt1WKin/LDFZ29jtzB21lTwJYtou0Hx2Q==",
+  "dgSpecHash": "6WKEbnn3fIOsXsM9vC/kAr3/+ve2eG9HVPET9YIurKYVcY583IrBgb2y/WDv5cAWmgBMAmyg+REGdEzCO31ArA==",
   "success": true,
-  "projectFilePath": "D:\\asp.net core\\WeatherForecastTest\\WeatherForecastTest\\WeatherForecastTest.csproj",
+  "projectFilePath": "D:\\test\\OpenWeatherTest\\WeatherForecastTest\\WeatherForecastTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HP\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

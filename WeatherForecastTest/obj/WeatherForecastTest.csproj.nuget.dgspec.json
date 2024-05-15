@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\asp.net core\\WeatherForecastTest\\WeatherForecastTest\\WeatherForecastTest.csproj": {}
+    "D:\\test\\OpenWeatherTest\\WeatherForecastTest\\WeatherForecastTest.csproj": {}
   },
   "projects": {
-    "D:\\asp.net core\\WeatherForecastTest\\WeatherForecastTest\\WeatherForecastTest.csproj": {
+    "D:\\test\\OpenWeatherTest\\WeatherForecastTest\\WeatherForecastTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\asp.net core\\WeatherForecastTest\\WeatherForecastTest\\WeatherForecastTest.csproj",
+        "projectUniqueName": "D:\\test\\OpenWeatherTest\\WeatherForecastTest\\WeatherForecastTest.csproj",
         "projectName": "WeatherForecastTest",
-        "projectPath": "D:\\asp.net core\\WeatherForecastTest\\WeatherForecastTest\\WeatherForecastTest.csproj",
+        "projectPath": "D:\\test\\OpenWeatherTest\\WeatherForecastTest\\WeatherForecastTest.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "D:\\asp.net core\\WeatherForecastTest\\WeatherForecastTest\\obj\\",
+        "outputPath": "D:\\test\\OpenWeatherTest\\WeatherForecastTest\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
