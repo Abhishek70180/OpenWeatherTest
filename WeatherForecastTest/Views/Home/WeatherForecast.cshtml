@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Forecast</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .forecast-table {
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather Forecast @Model.Name</h1>
+    @*
+    <label for="cityName">Enter city name:</label> *@
+    <input type="text" id="cityName" name="cityName" value="@Model.Name" required readonly hidden>
+    <button id="getForecastBtn">Show 5-Day Forecast</button>
+    <table>
+        <tr>
+            <th>Information</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Temperature (Celsius)</td>
+            <td>@Model.Main.Temp °C</td>
+        </tr>
+        <tr>
+            <td>Temperature (Fahrenheit)</td>
+            <td>
+                @{
+                    var tempFahrenheit = (Model.Main.Temp * 9 / 5) + 32;
+                }@tempFahrenheit °F
+            </td>
+        </tr>
+        <tr>
+            <td>Humidity</td>
+            <td>@Model.Main.Humidity %</td>
+        </tr>
+        <tr>
+            <td>Wind Speed</td>
+            <td>@Model.Wind.Speed m/s</td>
+        </tr>
+        <tr>
+            <td>Weather Condition</td>
+            <td>@Model.Weather[0].Main - @Model.Weather[0].Description</td>
+        </tr>
+    </table>
+    <br />
+
+    <div id="dateButtons">
+    </div>
+
+    <div id="forecast">
+    </div>
+
+    <script>
+        const getForecastBtn = document.getElementById("getForecastBtn");
+        getForecastBtn.addEventListener("click", async () => {
+            let city = document.getElementById("cityName").value;
+            let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=8d6d4d65768721012b19680c6e14b805`;
+            try {
+                let res = await fetch(url);
+                let data = await res.json();
+                console.log("data", data);
+                displayDateButtons(data);
+            } catch (error) {
+                console.log(error);
+            }
+        });
+
+        const displayDateButtons = (data) => {
+            let dateButtonsDiv = document.getElementById("dateButtons");
+            dateButtonsDiv.innerHTML = "";
+
+            // Extract unique dates from the forecast data
+            let uniqueDates = [...new Set(data.list.map(entry => entry.dt_txt.split(' ')[0]))];
+
+            // Create a button for each unique date
+            uniqueDates.forEach(date => {
+                let button = document.createElement("button");
+                button.textContent = date;
+                button.addEventListener("click", () => {
+                    displayForecast(data, date);
+                });
+                dateButtonsDiv.appendChild(button);
+            });
+        };
+
+        const displayForecast = (data, selectedDate) => {
+            let forecastDiv = document.getElementById("forecast");
+            forecastDiv.innerHTML = "";
+
+            let filteredData = data.list.filter(entry => entry.dt_txt.split(' ')[0] === selectedDate);
+
+            // Create a table for the forecast data
+            let forecastTable = document.createElement("table");
+            forecastTable.classList.add("forecast-table");
+
+            let headerRow = forecastTable.insertRow();
+            let headers = ["Time", "Temperature (°C)", "Humidity (%)", "Wind Speed (m/s)", "Weather"];
+            headers.forEach(headerText => {
+                let header = document.createElement("th");
+                header.textContent = headerText;
+                headerRow.appendChild(header);
+            });
+            filteredData.forEach(entry => {
+                let row = forecastTable.insertRow();
+                row.insertCell().textContent = entry.dt_txt.split(' ')[1];
+                row.insertCell().textContent = `${(entry.main.temp - 273.15).toFixed(2)} °C`;
+                row.insertCell().textContent = `${entry.main.humidity}%`;
+                row.insertCell().textContent = `${entry.wind.speed} m/s`;
+                row.insertCell().textContent = `${entry.weather[0].main} - ${entry.weather[0].description}`;
+            });
+            forecastDiv.appendChild(forecastTable);
+        };
+    </script>
+</body>
+</html>
