@@ -127,7 +127,7 @@
             forecastTable.classList.add("forecast-table");
 
             let headerRow = forecastTable.insertRow();
-            let headers = ["Time", "Temperature (°C)", "Humidity (%)", "Wind Speed (m/s)", "Weather"];
+            let headers = ["Time", "Temperature (°C)", "Temperature (°F)", "Humidity (%)", "Wind Speed (m/s)", "Weather"];
             headers.forEach(headerText => {
                 let header = document.createElement("th");
                 header.textContent = headerText;
@@ -137,6 +137,7 @@
                 let row = forecastTable.insertRow();
                 row.insertCell().textContent = entry.dt_txt.split(' ')[1];
                 row.insertCell().textContent = `${(entry.main.temp - 273.15).toFixed(2)} °C`;
+                row.insertCell().textContent = `${((entry.main.temp - 273.15) * 9 / 5 + 32).toFixed(2)} °F`;
                 row.insertCell().textContent = `${entry.main.humidity}%`;
                 row.insertCell().textContent = `${entry.wind.speed} m/s`;
                 row.insertCell().textContent = `${entry.weather[0].main} - ${entry.weather[0].description}`;
