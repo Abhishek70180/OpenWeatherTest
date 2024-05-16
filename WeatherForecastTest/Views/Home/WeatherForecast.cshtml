@@ -37,14 +37,21 @@
         th {
             background-color: #f2f2f2;
         }
+
+        .alert {
+            padding: 15px;
+            background-color: #f44336;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
     <h1>Weather Forecast @Model.Name</h1>
-    @*
-    <label for="cityName">Enter city name:</label> *@
     <input type="text" id="cityName" name="cityName" value="@Model.Name" required readonly hidden>
     <button id="getForecastBtn">Show 5-Day Forecast</button>
+    <div id="alertDiv" class="alert" style="display: none;"></div>
     <table>
         <tr>
             <th>Information</th>
@@ -92,11 +99,23 @@
                 let res = await fetch(url);
                 let data = await res.json();
                 console.log("data", data);
+                checkForAlerts(data);
                 displayDateButtons(data);
             } catch (error) {
                 console.log(error);
             }
         });
+
+        const checkForAlerts = (data) => {
+            const alerts = data.list.some(entry => entry.weather[0].main === "Thunderstorm" || entry.weather[0].main === "Rain");
+            const alertDiv = document.getElementById("alertDiv");
+            if (alerts) {
+                alertDiv.textContent = "Severe weather alert: Thunderstorm or heavy rain expected.";
+                alertDiv.style.display = "block";
+            } else {
+                alertDiv.style.display = "none";
+            }
+        };
 
         const displayDateButtons = (data) => {
             let dateButtonsDiv = document.getElementById("dateButtons");
