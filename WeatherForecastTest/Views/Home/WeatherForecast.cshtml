@@ -45,6 +45,11 @@
             border-radius: 8px;
             margin-bottom: 15px;
         }
+
+        .weather-icon {
+            width: 50px;
+            height: 50px;
+        }
     </style>
 </head>
 <body>
@@ -84,11 +89,9 @@
     </table>
     <br />
 
-    <div id="dateButtons">
-    </div>
+    <div id="dateButtons"></div>
 
-    <div id="forecast">
-    </div>
+    <div id="forecast"></div>
 
     <script>
         const getForecastBtn = document.getElementById("getForecastBtn");
@@ -121,10 +124,8 @@
             let dateButtonsDiv = document.getElementById("dateButtons");
             dateButtonsDiv.innerHTML = "";
 
-            // Extract unique dates from the forecast data
             let uniqueDates = [...new Set(data.list.map(entry => entry.dt_txt.split(' ')[0]))];
 
-            // Create a button for each unique date
             uniqueDates.forEach(date => {
                 let button = document.createElement("button");
                 button.textContent = date;
@@ -141,12 +142,11 @@
 
             let filteredData = data.list.filter(entry => entry.dt_txt.split(' ')[0] === selectedDate);
 
-            // Create a table for the forecast data
             let forecastTable = document.createElement("table");
             forecastTable.classList.add("forecast-table");
 
             let headerRow = forecastTable.insertRow();
-            let headers = ["Time", "Temperature (°C)", "Temperature (°F)", "Humidity (%)", "Wind Speed (m/s)", "Weather"];
+            let headers = ["Time", "Temperature (°C)", "Temperature (°F)", "Humidity (%)", "Wind Speed (m/s)", "Weather", "Icon"];
             headers.forEach(headerText => {
                 let header = document.createElement("th");
                 header.textContent = headerText;
@@ -160,6 +160,12 @@
                 row.insertCell().textContent = `${entry.main.humidity}%`;
                 row.insertCell().textContent = `${entry.wind.speed} m/s`;
                 row.insertCell().textContent = `${entry.weather[0].main} - ${entry.weather[0].description}`;
+
+                let imgCell = row.insertCell();
+                let weatherIcon = document.createElement("img");
+                weatherIcon.src = `http://openweathermap.org/img/wn/${entry.weather[0].icon}.png`;
+                weatherIcon.classList.add("weather-icon");
+                imgCell.appendChild(weatherIcon);
             });
             forecastDiv.appendChild(forecastTable);
         };
